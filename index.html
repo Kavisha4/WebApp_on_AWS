@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>To the Power of Math!</title>
+    <!-- Styling for the client UI -->
+    <style>
+    h1 {
+        color: #FFFFFF;
+        font-family: system-ui;
+        margin-left: 20px;
+    }
+    body {
+        background-color: #222629;
+    }
+    label {
+        color: #86C232;
+        font-family: system-ui;
+        font-size: 20px;
+        margin-left: 20px;
+        margin-top: 20px;
+    }
+    button {
+        background-color: #86C232;
+        border-color: #86C232;
+        color: #FFFFFF;
+        font-family: system-ui;
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 30px;
+        margin-top: 20px;
+        width: 140px;
+    }
+    input {
+        color: #222629;
+        font-family: system-ui;
+        font-size: 20px;
+        margin-left: 10px;
+        margin-top: 20px;
+        width: 100px;
+    }
+    /* Additional styles */
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .result {
+        color: #FFFFFF;
+        font-family: system-ui;
+        font-size: 24px;
+        margin-top: 30px;
+        text-align: center;
+    }
+    .link {
+        color: #86C232;
+        font-family: system-ui;
+        font-size: 18px;
+        margin-top: 20px;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+    }
+    /* New styles for menu */
+    nav {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+    }
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    li {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+    /* New styles for additional text */
+    p {
+        color: #fff;
+        font-family: system-ui;
+        font-size: 20px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+    </style>
+    <script>
+        // callAPI function that takes the base and exponent numbers as parameters
+        var callAPI = (base,exponent)=>{
+            // instantiate a headers object
+            var myHeaders = new Headers();
+            // add content type header to object
+            myHeaders.append("Content-Type", "application/json");
+            // using built in JSON utility package turn object to string and store in a variable
+            var raw = JSON.stringify({"base":base,"exponent":exponent});
+            // create a JSON object with parameters for API call and store in a variable
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            // make API call with parameters and use promises to get response
+            fetch("https://x0qc4qoc9j.execute-api.us-east-1.amazonaws.com/dev", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                // display the result in the .result element
+                var resultElement = document.querySelector('.result');
+                resultElement.innerHTML = `Result: ${JSON.parse(result).body}`;
+            })
+            .catch(error => console.log('error', error));
+        }
+    </script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>To the Power of Math!</h1>
+        <form>
+            <label for="base">Base number:</label>
+            <input type="text" id="base" name="base">
+            <label for="exponent">...to the power of:</label>
+            <input type="text" id="exponent" name="exponent">
+            <!-- set button onClick method to call function we defined passing input values as parameters -->
+            <button type="button" onclick="callAPI(document.getElementById('base').value,document.getElementById('exponent').value)">CALCULATE</button>
+        </form>
+        <div class="result"></div>
+        <p>Enter a base number and an exponent and click "Calculate" to get the result. This calculator uses an API to perform the calculation.</p>
+        <a href="#" class="link">Learn more about exponents</a>
+    </div>
+</body>
+</html>
