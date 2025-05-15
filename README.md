@@ -1,5 +1,7 @@
 # WebApp_on_AWS
 Used AWS Amplify, IAM, Lambda, DynamoDB and API Gateway
+<img width="1291" alt="image" src="https://github.com/user-attachments/assets/2d7cde21-3114-4de3-afb0-86034b545d7a" />
+
 # Creating a web app on AWS
 
 Link to website : https://dev.d2zaifoypgoa7r.amplifyapp.com/
